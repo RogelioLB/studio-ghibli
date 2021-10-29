@@ -5,7 +5,7 @@ import { faInfoCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
 export function ModalMobile({film,onClose}){
     return(
         <div className="modal" onClick={(e)=>e.stopPropagation()}>
-            {film && (
+            {film ? (
                 <>
                 <button onClick={onClose}><FontAwesomeIcon icon={faTimes} /></button>
                 <div className="info">
@@ -25,6 +25,10 @@ export function ModalMobile({film,onClose}){
                     <a><button>See More<FontAwesomeIcon icon={faInfoCircle}/></button></a>
                 </Link>
                 </>
+            )
+            :
+            (
+                <div className="hide"></div>
             )}
             <style jsx>{`
             .modal{
@@ -33,12 +37,15 @@ export function ModalMobile({film,onClose}){
                 width:100%;
                 position:fixed;
                 bottom:0;
-                transform:${film ? "translateY(0)" : "translateY(100px)"};
+                transform:${film ? "translateY(0)" : "translateY(300px)"};
                 background:#000000;
-                transition:transform .4s;
+                transition: all .6s ease;
             }
             .info{
                 display:flex;
+            }
+            .hide{
+                height:200px;
             }
             .content{
                 margin-left:10px;
