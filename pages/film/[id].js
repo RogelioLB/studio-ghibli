@@ -35,6 +35,7 @@ export default function FilmPage({film}){
                     }
                     .film-image img{
                         max-width:100%;
+                        width: 100%;
                     }
                     .film-info{
                         padding:10px;
@@ -86,7 +87,6 @@ export async function getServerSideProps(context){
                 time:res.running_time,
                 id:res.id
             };
-            console.log(film)
         return {props:{film}}
     }catch(err){
         console.log(err)

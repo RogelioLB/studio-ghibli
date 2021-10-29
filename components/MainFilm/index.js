@@ -15,6 +15,7 @@ export function MainFilm({film,onClick}) {
             <style jsx>{`
                 .image-film {
                     width: 100%;
+                    height:${isDesktop ? '100vh' : 'auto'};
                     position: relative;
                 }
                 .image-film:before{
@@ -30,6 +31,8 @@ export function MainFilm({film,onClick}) {
                 }
                 img{
                     width:100%;
+                    object-fit:cover;
+                    height:${isDesktop ? '100vh' : 'auto'};
                 }
                 .title-film{
                     position: absolute;

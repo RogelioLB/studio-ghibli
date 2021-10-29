@@ -30,12 +30,12 @@ export default function Home() {
         <>
           <MainFilm film={filmMain} onClick={(e)=>handleClick(e,filmMain)}/>
           <FilmsWrapper title="Best Rated">
-            {bestRateds.map((film) => <Film film={film} key={film.id} onClick={(e)=>handleClick(e,film)}/>)}
+            {bestRateds.map((film) => <Film film={film} key={film.id} onClick={(e)=>handleClick(e,film)} hover={true}/>)}
           </FilmsWrapper>
           <FilmsWrapper title="All Films">
-            {films.map((film)=><Film film={film} key={film.id} onClick={e=>handleClick(e,film)}/>)}
+            {films.map((film)=><Film film={film} key={film.id} onClick={e=>handleClick(e,film)} hover={true}/>)}
           </FilmsWrapper>
-          {isDesktop ? <ModalDesktop film={filmSelected}/> : <ModalMobile film={filmSelected} onClose={handleCloseModal}/>}</>
+          {isDesktop ? <ModalDesktop film={filmSelected} onClose={handleCloseModal}/> : <ModalMobile film={filmSelected} onClose={handleCloseModal}/>}</>
       )}
       <style jsx>{`
         div.container{

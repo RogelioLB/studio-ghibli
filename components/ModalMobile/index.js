@@ -100,6 +100,14 @@ export function ModalMobile({film,onClose}){
                 right:0;
                 position:relative;
                 border-radius:2px;
+                transition: background .4s;
+            }
+            a button:hover{
+                background:gray;
+            }
+
+            a button:active{
+                transform:translateY(2px);
             }
             `}</style>
         </div>
