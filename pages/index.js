@@ -7,6 +7,7 @@ import { useMedia } from "../hooks/useMedia"
 import { ModalMobile } from "../components/ModalMobile/index"
 import { ModalDesktop } from "../components/ModalDesktop/index"
 import { useState } from "react";
+import { Loader } from "../components/Loader/index";
 
 export default function Home() {
   const {films,bestRateds,loading,filmMain} = useFilms();
@@ -25,7 +26,7 @@ export default function Home() {
   return (
     <div className="container">
       <NavBar />
-      {loading ? <h1>Loading...</h1> : (
+      {loading ? <Loader /> : (
         <>
           <MainFilm film={filmMain} onClick={(e)=>handleClick(e,filmMain)}/>
           <FilmsWrapper title="Best Rated">
