@@ -38,9 +38,9 @@ export function ModalDesktop({film,onClose}){
                 position:fixed;
                 top: 50%;
                 left: 50%;
-                transform:${film ? "translate(-50%,-50%)" : "translate(-50%,200%)"};
+                transform:${film ? "translate(-50%,-50%)" : "translate(-50%,-1000%)"};
                 background:#000000;
-                transition: all .6s ease;
+                transition: all 1s ease;
             }
             .info{
                 display:flex;
