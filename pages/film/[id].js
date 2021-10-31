@@ -3,12 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { Page404 } from "../../components/404";
 import { NavBar } from "../../components/NavBar";
+import Head from "next/head";
 
 export default function FilmPage({film}){
     return(
         <>
         {film ? (
             <>
+            <Head>
+                <title>{film.title}</title>
+                <meta name="description" content={film.description} />
+            </Head>
             <NavBar />
             <div className="film-page">
                 <div className="film-image">

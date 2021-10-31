@@ -9,6 +9,7 @@ import { ModalDesktop } from "../components/ModalDesktop/index"
 import { useState } from "react";
 import { Loader } from "../components/Loader/index";
 import { Footer } from "../components/Footer";
+import Head from "next/head";
 
 export default function Home() {
   const {films,bestRateds,loading,filmMain} = useFilms();
@@ -29,6 +30,10 @@ export default function Home() {
       <NavBar />
       {loading ? <Loader /> : (
         <>
+          <Head>
+            <title>Studio Ghibli</title>
+            <meta name="description" content="Studio Ghibli Films" />
+          </Head>
           <MainFilm film={filmMain} onClick={(e)=>handleClick(e,filmMain)}/>
           <FilmsWrapper title="Best Rated">
             {bestRateds.map((film) => <Film film={film} key={film.id} onClick={(e)=>handleClick(e,film)} hover={true}/>)}
