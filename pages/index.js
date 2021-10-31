@@ -8,6 +8,7 @@ import { ModalMobile } from "../components/ModalMobile/index"
 import { ModalDesktop } from "../components/ModalDesktop/index"
 import { useState } from "react";
 import { Loader } from "../components/Loader/index";
+import { Footer } from "../components/Footer";
 
 export default function Home() {
   const {films,bestRateds,loading,filmMain} = useFilms();
@@ -35,6 +36,7 @@ export default function Home() {
           <FilmsWrapper title="All Films">
             {films.map((film)=><Film film={film} key={film.id} onClick={e=>handleClick(e,film)} hover={true}/>)}
           </FilmsWrapper>
+          <Footer />
           {isDesktop ? <ModalDesktop film={filmSelected} onClose={handleCloseModal}/> : <ModalMobile film={filmSelected} onClose={handleCloseModal}/>}</>
       )}
       <style jsx>{`

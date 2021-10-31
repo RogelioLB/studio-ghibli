@@ -71,7 +71,7 @@ export function ModalDesktop({film,onClose}){
             }
             .description{
                 display: -webkit-box;
-                -webkit-line-clamp: 12;
+                -webkit-line-clamp: 11;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
                 font-size:1.1em;

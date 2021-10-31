@@ -1,6 +1,7 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { Page404 } from "../../components/404";
 import { NavBar } from "../../components/NavBar";
 
 export default function FilmPage({film}){
@@ -41,6 +42,9 @@ export default function FilmPage({film}){
                         padding:10px;
                         font-size:1em;
                     }
+                    .film-info h1{
+                        margin-bottom:10px;
+                    }
                     .film-meta{
                         display:flex;
                         gap:20px;
@@ -65,7 +69,7 @@ export default function FilmPage({film}){
             </>
         )
         :   
-        <h2>Error No encontrado.</h2>
+        <Page404 />
         }
         </>
     )
@@ -89,7 +93,6 @@ export async function getServerSideProps(context){
             };
         return {props:{film}}
     }catch(err){
-        console.log(err)
         return {props:{film:null}}
     }
 }

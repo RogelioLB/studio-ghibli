@@ -32,7 +32,7 @@ export function FilmsWrapper({children,title}) {
             display: flex;
           }
           .films-wrapper {
-              padding:${isDesktop ? "0" : "0 15px"};
+              padding:0;
               display:flex;
               flex:1;
               gap:10px;

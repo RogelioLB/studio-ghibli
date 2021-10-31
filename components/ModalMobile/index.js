@@ -97,6 +97,7 @@ export function ModalMobile({film,onClose}){
                 font-size:1.2em;
                 margin-top:10px;
                 gap:6px;
+                font-weight:700;
                 right:0;
                 position:relative;
                 border-radius:2px;

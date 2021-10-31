@@ -1,4 +1,7 @@
+import { useMedia } from "../../hooks/useMedia";
+
 export function Film({film,onClick,hover}) {
+  const {isDesktop} = useMedia()
   return (
     <div className="film" onClick={onClick}>
         <div className="film-image">
@@ -6,7 +9,7 @@ export function Film({film,onClick,hover}) {
         </div>
         <style jsx>{`
         .film{
-            height:200px;
+            height:${isDesktop ? "300px":"200px"};
             cursor:${hover ? "pointer" : "default"};
         }
         .film img{
@@ -21,7 +24,7 @@ export function Film({film,onClick,hover}) {
         }
 
         .film:hover img{
-          transform:${hover ? "scale(1.3)" : "scale(1)"};
+          transform:${hover ? "scale(1.5)" : "scale(1)"};
         }
         `}</style>
     </div>
