@@ -64,7 +64,7 @@ export function ModalMobile({film,onClose}){
                 -webkit-line-clamp: 8;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                font-size:.9em;
+                font-size:1em;
                 text-overflow: ellipsis;
             }
             .meta{
@@ -90,8 +90,8 @@ export function ModalMobile({film,onClose}){
             }
 
             a button{
-                background:white;
-                color:black;
+                background:red;
+                color:white;
                 top:0;
                 width:100%;
                 font-size:1.2em;
@@ -103,7 +103,7 @@ export function ModalMobile({film,onClose}){
                 transition: background .4s;
             }
             a button:hover{
-                background:gray;
+                background:#b50404;
             }
 
             a button:active{

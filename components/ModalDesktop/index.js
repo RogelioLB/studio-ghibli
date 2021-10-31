@@ -12,18 +12,22 @@ export function ModalDesktop({film,onClose}){
                     <div className="image">
                         <Film film={film}/>
                     </div>
-                    <div className="content">
-                        <div className="title"><h3>{film.title}</h3></div>
-                        <div className="meta">
-                            <h5>{film.release_date}</h5>
-                            <h5>{film.time}min.</h5>
+                    <div className="content-container">
+                        <div className="content">
+                            <div className="data-important">
+                                <div className="title"><h3>{film.title}</h3></div>
+                                <div className="meta">
+                                    <h5>{film.release_date}</h5>
+                                    <h5>{film.time}min.</h5>
+                                </div>
+                            </div>
+                            <div className="description"><p>{film.description}</p></div>
                         </div>
-                        <div className="description"><p>{film.description}</p></div>
+                        <Link href={`/film/${film.id}`}>
+                            <a><button>See More<FontAwesomeIcon icon={faInfoCircle}/></button></a>
+                        </Link>
                     </div>
                 </div>
-                <Link href={`/film/${film.id}`}>
-                    <a><button>See More<FontAwesomeIcon icon={faInfoCircle}/></button></a>
-                </Link>
                 </>
             )
             :
@@ -48,25 +52,34 @@ export function ModalDesktop({film,onClose}){
             .hide{
                 height:200px;
             }
-            .content{
+            .image :global(*){
+                height:350px;
+            }
+            .content-container{
                 margin-left:10px;
+                display:flex;
+                flex-direction:column;
+            }
+            .content{
+                height:100%;
             }
             .title{
                 width:90%;
             }
             .title h3{
-                white-space: nowrap;
-                font-size:1.2em;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                font-size:1.9em;
             }
             .description{
                 display: -webkit-box;
-                -webkit-line-clamp: 8;
+                -webkit-line-clamp: 12;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                font-size:.9em;
+                font-size:1.1em;
+                margin-top:10px;
                 text-overflow: ellipsis;
+            }
+            .description p{
+                overflow: hidden;
             }
             .meta{
                 color:#BDBDBD;
@@ -89,14 +102,17 @@ export function ModalDesktop({film,onClose}){
                 border:none;
                 cursor:pointer;
             }
+            a{
+                margin:auto 0 0 0;
+            }
 
             a button{
-                background:white;
-                color:black;
+                background:red;
+                color:white;
                 top:0;
                 width:100%;
+                font-weight:700;
                 font-size:1.2em;
-                margin-top:10px;
                 gap:6px;
                 right:0;
                 position:relative;
@@ -104,7 +120,7 @@ export function ModalDesktop({film,onClose}){
                 transition: background .4s;
             }
             a button:hover{
-                background:gray;
+                background:#b50404;
             }
 
             a button:active{
