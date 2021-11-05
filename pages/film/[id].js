@@ -5,7 +5,7 @@ import { Page404 } from "../../components/404";
 import { NavBar } from "../../components/NavBar";
 import Head from "next/head";
 
-export default function FilmPage({film}){
+export default function FilmPage({film,id}){
     return(
         <>
         {film ? (
@@ -32,6 +32,9 @@ export default function FilmPage({film}){
                         <h4>{film.producer}</h4>
                         <h3>Director:</h3>
                         <h4>{film.director}</h4>
+                    </div>
+                    <div className="video">
+                        <iframe src={`https://youtube.com/embed/${id}`} />
                     </div>
                 </div>
                 <style jsx>{`
@@ -96,8 +99,13 @@ export async function getServerSideProps(context){
                 time:res.running_time,
                 id:res.id
             };
-        return {props:{film}}
+            const result = await axios.post("http://localhost:3000/api/film",{
+                title:film.title
+            })
+            console.log(result)
+        return {props:{film,id:result.data.id}}
     }catch(err){
+        console.log(err)
         return {props:{film:null}}
     }
 }
