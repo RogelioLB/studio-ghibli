@@ -99,7 +99,7 @@ export async function getServerSideProps(context){
                 time:res.running_time,
                 id:res.id
             };
-            const result = await axios.post("http://localhost:3000/api/film",{
+            const result = await axios.post("https://studio-ghibli-rho.vercel.app/api/film",{
                 title:film.title
             })
             console.log(result)
