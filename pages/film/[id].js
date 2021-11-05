@@ -4,6 +4,7 @@ import axios from "axios";
 import { Page404 } from "../../components/404";
 import { NavBar } from "../../components/NavBar";
 import Head from "next/head";
+import { Footer } from "../../components/Footer";
 
 export default function FilmPage({film,id}){
     return(
@@ -34,6 +35,7 @@ export default function FilmPage({film,id}){
                         <h4>{film.director}</h4>
                     </div>
                     <div className="video">
+                        <h3>Trailer: </h3>
                         <iframe src={`https://youtube.com/embed/${id}`} />
                     </div>
                 </div>
@@ -65,14 +67,27 @@ export default function FilmPage({film,id}){
                         color:#ffc107;
                     }
                     .film-people h3{
-                        font-size:.9em;
+                        font-size:1.2em;
                         font-weight:600;
                     }
                     .film-people h4{
                         font-size:.9em;
                         font-weight:400;
                     }
+                    .video{
+                        max-width:800px;
+                        margin:0 auto;
+                    }
+                    .video h3{
+                        font-size:1.6em;
+                        margin-bottom:10px;
+                    }
+                    iframe{
+                        width:100%;
+                        height:346px;
+                    }
                 `}</style>
+                <Footer />
             </div>
             </>
         )
