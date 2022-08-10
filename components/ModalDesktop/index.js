@@ -10,7 +10,7 @@ export function ModalDesktop({film,onClose}){
                 <button onClick={onClose}><FontAwesomeIcon icon={faTimes} /></button>
                 <div className="info">
                     <div className="image">
-                        <Film film={film}/>
+                        <Film film={film} />
                     </div>
                     <div className="content-container">
                         <div className="content">
