@@ -5,8 +5,70 @@ import { Page404 } from "../../components/404";
 import { NavBar } from "../../components/NavBar";
 import Head from "next/head";
 import { Footer } from "../../components/Footer";
+import { useRef, useState, useEffect } from "react";
+import Image from 'next/image'
 
 export default function FilmPage({film,id}){
+    const [selectedItem,setSelectedItem] = useState(0)
+    const [objectVideo,setObjectVideo] = useState(null);
+    const trailer = useRef()
+    const es = useRef()
+    const en = useRef()
+
+    useEffect(()=>{
+        const fetch = async() =>{
+            const objectVideo = await (await axios.get(`https://studio-g.herokuapp.com/film/${film.id}`)).data
+            setObjectVideo(objectVideo)
+        }
+        fetch()
+        changeVideo(selectedItem)
+    },[])
+
+    const changeVideo = (id,e) =>{
+        if(es.current) es.current.style.background="none"
+        if(trailer.current) trailer.current.style.background="none"
+        if(en.current) en.current.style.background="none"
+        setSelectedItem(id);
+        if(id===0)
+            trailer.current.style.background="#154360"
+        else if(id===1)
+            es.current.style.background="#154360"
+        else if(id===2)
+            en.current.style.background="#154360"
+    }
+
+    const Trailer = () => {
+        return(
+            <>
+                <iframe src={`https://youtube.com/embed/${id}`} />
+                <style jsx>
+                    {`
+                        iframe{
+                            width:100%;
+                            height:100%;
+                        }
+                    `}
+                </style>
+            </>
+        )
+    }
+
+    const Video = ({src}) =>{
+        return(
+            <>
+                <iframe src={src} allowFullScreen/>
+                <style jsx>
+                    {`
+                        iframe{
+                            width:100%;
+                            height:100%;
+                        }
+                    `}
+                </style>
+            </>
+        )
+    }
+
     return(
         <>
         {film ? (
@@ -34,10 +96,23 @@ export default function FilmPage({film,id}){
                         <h3>Director:</h3>
                         <h4>{film.director}</h4>
                     </div>
-                    <div className="video">
-                        <h3>Trailer: </h3>
-                        <iframe src={`https://youtube.com/embed/${id}`} />
+                    <div className="video-container">
+                        <nav>
+                            <ul>
+                                <li onClick={e => changeVideo(0,e)} ref={trailer}>Trailer</li>
+                                {objectVideo?.opciones[0] && (<li onClick={e => changeVideo(1,e)} ref={es}><Image src="/mx.png" alt="es" width={20} height={20}/>{objectVideo?.opciones[0].type}</li>)}
+                                {objectVideo?.opciones[1] && (<li onClick={e => changeVideo(2,e)} ref={en}>{objectVideo?.opciones[1].type}</li>)}
+                            </ul>
+                        </nav>
+                        <div className="video">
+                            {
+                                selectedItem === 0 && (<Trailer />) ||
+                                selectedItem === 1 && (<Video src={objectVideo?.opciones[0].url} />) ||
+                                selectedItem === 2 && (<Video src={objectVideo?.opciones[1].url} />)
+                            }
+                        </div>
                     </div>
+                    
                 </div>
                 <style jsx>{`
                     .film-image{
@@ -74,17 +149,34 @@ export default function FilmPage({film,id}){
                         font-size:.9em;
                         font-weight:400;
                     }
+                    .video-container{
+                        max-width:90%;
+                        margin:30px auto;
+                        background-color: #154360;
+                        padding-bottom:15px;
+                    }
                     .video{
-                        max-width:800px;
-                        margin:0 auto;
+                        max-width:95%;
+                        height:600px;
+                        background-color:black;
+                        margin:10px auto 0 auto;
                     }
-                    .video h3{
-                        font-size:1.6em;
-                        margin-bottom:10px;
+                    @media(max-width:768px){
+                        .video{height:250px;}
                     }
-                    iframe{
-                        width:100%;
-                        height:346px;
+                    nav{
+                        background-color: #1b4f72;
+                    }
+                    nav ul{
+                        display:flex;
+                        list-style:none;
+                    }
+                    nav ul li{
+                        cursor:pointer;
+                        transition: all .2s;
+                        padding:10px 15px;
+                        display:flex;
+                        align-items:center;
                     }
                 `}</style>
                 <Footer />
@@ -117,7 +209,7 @@ export async function getServerSideProps(context){
             const result = await axios.post("https://studio-ghibli-rho.vercel.app/api/film",{
                 title:film.title
             })
-            console.log(result)
+
         return {props:{film,id:result.data.id}}
     }catch(err){
         console.log(err)

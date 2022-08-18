@@ -22,6 +22,7 @@ export const useFilms = () =>{
                     'https://ghibliapi.herokuapp.com/films'
                 );
                 const dataParsed = result.data.map(film => {
+                    console.log({title:film.title,id:film.id})
                     return {
                         title: film.title,
                         description: film.description,
