@@ -27,9 +27,6 @@ export default function Home() {
 
   return (
     <div className="container">
-      <NavBar />
-      {loading ? <Loader /> : (
-        <>
           <Head>
             <title>Studio Ghibli Films</title>
             <meta name="description" content="A place where you could see all the information about the films of this studio." />
@@ -39,6 +36,9 @@ export default function Home() {
             <meta property="og:description" content="A place where you could see all the information about the films of this studio." />
             <meta property="og:image" content="https://image.tmdb.org/t/p/original/etqr6fOOCXQOgwrQXaKwenTSuzx.jpg" />
           </Head>
+      <NavBar />
+      {loading ? <Loader /> : (
+        <>
           <MainFilm film={filmMain} onClick={(e)=>handleClick(e,filmMain)}/>
           <FilmsWrapper title="Best Rated">
             {bestRateds.map((film) => <Film film={film} key={film.id} onClick={(e)=>handleClick(e,film)} hover={true}/>)}
