@@ -76,6 +76,11 @@ export default function FilmPage({film,id}){
             <Head>
                 <title>{film.title}</title>
                 <meta name="description" content={film.description} />
+                <meta name="robots" content="index,follow" />
+                <meta name="googlebot" content="translate" />
+                <meta property="og:title" content={film.title} />
+                <meta property="og:description" content={film.description} />
+                <meta property="og:image" content={film.poster} />
             </Head>
             <NavBar />
             <div className="film-page">
