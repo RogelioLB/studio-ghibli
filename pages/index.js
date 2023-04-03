@@ -27,15 +27,15 @@ export default function Home() {
 
   return (
     <div className="container">
-          <Head>
-            <title>Studio Ghibli Films</title>
-            <meta name="description" content="A place where you could see all the information about the films of this studio." />
-            <meta name="robots" content="index,follow" />
-            <meta name="googlebot" content="translate" />
-            <meta property="og:title" content="Studio Ghibli Films" />
-            <meta property="og:description" content="A place where you could see all the information about the films of this studio." />
-            <meta property="og:image" content="https://image.tmdb.org/t/p/original/etqr6fOOCXQOgwrQXaKwenTSuzx.jpg" />
-          </Head>
+      <Head>
+        <title>Studio Ghibli Films</title>
+        <meta name="description" content="A place where you could see all the information about the films of this studio." />
+        <meta name="robots" content="index,follow" />
+        <meta name="googlebot" content="translate" />
+        <meta property="og:title" content="Studio Ghibli Films" />
+        <meta property="og:description" content="A place where you could see all the information about the films of this studio." />
+        <meta property="og:image" content="https://image.tmdb.org/t/p/original/etqr6fOOCXQOgwrQXaKwenTSuzx.jpg" />
+      </Head>
       <NavBar />
       {loading ? <Loader /> : (
         <>

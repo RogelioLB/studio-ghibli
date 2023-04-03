@@ -19,7 +19,7 @@ export const useFilms = () =>{
         const fetchData = async () => {
             try{
                 const result = await axios(
-                    'https://ghibliapi.herokuapp.com/films'
+                    '/api/films'
                 );
                 const dataParsed = result.data.map(film => {
                     console.log({title:film.title,id:film.id})
