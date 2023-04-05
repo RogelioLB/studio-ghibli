@@ -90,7 +90,7 @@ export default function Home({ filmMain, films, bestRated }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   let dataParsed;
   try {
     const result = await axios(`${process.env.API_BASE}/api/films?lang=en`);
