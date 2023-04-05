@@ -1,21 +1,22 @@
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMedia } from "../../hooks/useMedia";
+import Image from "next/image"
 
 export function MainFilm({film,onClick}) {
     const {isDesktop} = useMedia();
     return (
         <div>
             <div className="image-film" onClick={onClick}>
-                <img src={isDesktop ? film.poster : film.image} alt={film.title}/>
+                <Image src={isDesktop ? film.poster : film.image} alt={film.title} layout="fill" style={{objectFit:"cover"}}/>
                 <div className="title-film">
                     <h1>{film.title}<span><FontAwesomeIcon icon={faInfoCircle}/></span></h1>
-                </div>
+  -              </div>
             </div>
             <style jsx>{`
                 .image-film {
-                    width: 100%;
-                    height:${isDesktop ? '100vh' : 'auto'};
+                    width:100vw;
+                    aspect-ratio:${isDesktop ? "16/9" : "9/12"};
                     position: relative;
                 }
                 .image-film:before{

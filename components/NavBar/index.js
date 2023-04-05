@@ -1,9 +1,15 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import { useRef,useEffect } from "react";
+import Image from "next/image"
+import { useRef,useEffect, useContext } from "react";
 import Link from "next/link";
+import { langContext } from "../../context/langContext";
 export function NavBar() {
   const nav = useRef();
+  const {lang,updateLang} = useContext(langContext)
+
+  const handleClick = () =>{
+    if(lang.lang==="en") updateLang("es")
+    else updateLang("en")
+  }
 
   useEffect(()=>{
     window.addEventListener("scroll",()=>{
@@ -19,6 +25,9 @@ export function NavBar() {
   return (
     <nav ref={nav}>
         <Link href="/"><a><img src="/logo.svg" alt="Studio Ghibli" /></a></Link>
+        {
+          lang.lang === "en" ? <img className="bandera" src="/usa.svg" onClick={handleClick} alt="USA" /> : <img className="bandera" onClick={handleClick} src="/mx.webp" alt="ES"/>
+        }
         <style jsx>{`
         nav{
             display:flex;
@@ -44,6 +53,10 @@ export function NavBar() {
             display:grid;
             place-items:center;
             font-size:1.3rem;
+        }
+        .bandera{
+          aspect-ratio:16/9;
+          width:40px;
         }
         `}</style>
     </nav>

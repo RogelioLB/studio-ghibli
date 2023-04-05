@@ -143,8 +143,9 @@ export default function FilmPage({film,id}){
 
 export async function getServerSideProps(context){
     const {id} = context.query;
+    
     try{
-        const res = (await (await axios.get(`${process.env.API_BASE}/api/films/${id}`)).data);
+        const res = (await (await axios.get(`${process.env.API_BASE}/api/films/${id}?lang=es`)).data);
         const film = {
                 title: res.title,
                 description: res.description,

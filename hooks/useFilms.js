@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { langContext } from "../context/langContext";
 
 function random(min, max) {
     return Math.floor((Math.random() * (max - min + 1)) + min);
@@ -14,15 +15,15 @@ export const useFilms = () =>{
     const [filmMain,setFilmMain] = useState(null);
     const [loading, setLoading] = useState(true);
     const [bestRateds,setBestRateds] = useState([]);
+    const {lang} = useContext(langContext)
     
     useEffect(() => {
         const fetchData = async () => {
             try{
                 const result = await axios(
-                    '/api/films'
+                    `/api/films?lang=${lang.lang}`
                 );
                 const dataParsed = result.data.map(film => {
-                    console.log({title:film.title,id:film.id})
                     return {
                         title: film.title,
                         description: film.description,
@@ -45,7 +46,7 @@ export const useFilms = () =>{
             }
         };
         fetchData();
-    }, []);
+    }, [lang]);
     
     return {films, loading,filmMain,bestRateds};
 }
