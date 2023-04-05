@@ -12,6 +12,7 @@ import { Footer } from "../components/Footer";
 import Head from "next/head";
 import { getPlaiceholder } from "plaiceholder";
 import axios from "axios";
+import MediaQuery from 'react-responsive'
 
 export default function Home({ filmMain, films, bestRated }) {
   const { isDesktop } = useMedia();
@@ -73,11 +74,12 @@ export default function Home({ filmMain, films, bestRated }) {
             ))}
           </FilmsWrapper>
           <Footer />
-          {isDesktop ? (
-            <ModalDesktop film={filmSelected} onClose={handleCloseModal} />
-          ) : (
+          <MediaQuery maxWidth={768}>
             <ModalMobile film={filmSelected} onClose={handleCloseModal} />
-          )}
+          </MediaQuery>
+          <MediaQuery minWidth={768}>
+            <ModalDesktop film={filmSelected} onClose={handleCloseModal} />
+          </MediaQuery>
         </>
       <style jsx>{`
         div.container {

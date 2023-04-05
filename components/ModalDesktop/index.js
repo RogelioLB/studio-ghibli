@@ -52,9 +52,6 @@ export function ModalDesktop({film,onClose}){
             .hide{
                 height:200px;
             }
-            .image :global(*){
-                height:350px;
-            }
             .content-container{
                 margin-left:10px;
                 display:flex;

@@ -2,17 +2,17 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMedia } from "../../hooks/useMedia";
 import Image from "next/image"
+import MediaQuery from "react-responsive";
 
 export function MainFilm({film,onClick}) {
-    const {isDesktop,isMobile} = useMedia();
-    
     return (
         <div>
-            <div className="image-film" onClick={onClick}>
+        <MediaQuery minWidth={768}>
+            <div className="image-film" onClick={onClick} style={{aspectRatio:"16/8"}}>
                 <Image 
                         placeholder="blur" 
-                        blurDataURL={isDesktop?film.poster.base64 : film.image.base64 }  
-                        src={isDesktop?film.poster.src : film.image.src} 
+                        blurDataURL={film.poster.base64 }  
+                        src={film.poster.src} 
                         alt={film.title} 
                         layout="fill" 
                     />
@@ -20,12 +20,28 @@ export function MainFilm({film,onClick}) {
                     <h1>{film.title}<span><FontAwesomeIcon icon={faInfoCircle}/></span></h1>
                 </div>
             </div>
+        </MediaQuery>
+        <MediaQuery maxWidth={768}>
+        <div className={`image-film`} onClick={onClick}>
+                <Image 
+                        placeholder="blur" 
+                        blurDataURL={film.image.base64 }  
+                        src={film.image.src} 
+                        alt={film.title} 
+                        layout="fill" 
+                    />
+                <div className="title-film">
+                    <h1>{film.title}<span><FontAwesomeIcon icon={faInfoCircle}/></span></h1>
+                </div>
+            </div>
+        </MediaQuery>
             <style jsx>{`
                 .image-film {
                     width:100vw;
-                    aspect-ratio:${isDesktop ? "16/8" : "9/12"};
+                    aspect-ratio: 9/12;
                     position: relative;
                 }
+                
                 .image-film:before{
                     content: '';
                     position:absolute;

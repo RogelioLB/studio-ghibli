@@ -6,6 +6,8 @@ import { NavBar } from "../../components/NavBar";
 import Head from "next/head";
 import { Footer } from "../../components/Footer";
 import { useMedia } from "../../hooks/useMedia";
+import Image from "next/image"
+import {getPlaiceholder} from "plaiceholder"
 
 
 export default function FilmPage({film,id}){
@@ -44,7 +46,7 @@ export default function FilmPage({film,id}){
             <NavBar />
             <div className="film-page">
                 <div className="film-image">
-                    <img src={film.poster} alt={film.title}/>
+                    <Image src={film.poster} alt={film.title} placeholder="blur" blurDataURL={film.base64} layout="fill" />
                 </div>
                 <div className="film-info">
                     <div className="film-data-container">
@@ -70,7 +72,8 @@ export default function FilmPage({film,id}){
                 <style jsx>{`
                     .film-image{
                         width: 100%;
-
+                        position:relative;
+                        aspect-ratio:16/9;
                     }
                     .film-image img{
                         max-width:100%;
@@ -79,8 +82,6 @@ export default function FilmPage({film,id}){
                     .film-info{
                         padding:10px;
                         font-size:1em;
-                        display:flex;
-                        flex-direction: ${isDesktop ? "flex" : "column"};
                     }
 
                     .film-info h1{
@@ -146,6 +147,7 @@ export async function getServerSideProps(context){
     
     try{
         const res = (await (await axios.get(`${process.env.API_BASE}/api/films/${id}?lang=es`)).data);
+        const {base64} = await getPlaiceholder(res.movie_banner)
         const film = {
                 title: res.title,
                 description: res.description,
@@ -156,7 +158,8 @@ export async function getServerSideProps(context){
                 image: res.image,
                 poster:res.movie_banner,
                 time:res.running_time,
-                id:res.id
+                id:res.id,
+                base64
             };
             const result = await axios.post(`${process.env.API_BASE}/api/film`,{
                 title:film.title
