@@ -1,21 +1,16 @@
 import { Film } from "../components/Film";
+import { Footer } from "../components/Footer";
 import { FilmsWrapper } from "../components/FilmsWrapper";
 import { MainFilm } from "../components/MainFilm";
 import { NavBar } from "../components/NavBar";
-import { random, shuffleArray, useFilms } from "../hooks/useFilms";
-import { useMedia } from "../hooks/useMedia";
-import { ModalMobile } from "../components/ModalMobile/index";
-import { ModalDesktop } from "../components/ModalDesktop/index";
+import { random, shuffleArray } from "../hooks/useFilms";
 import { useState } from "react";
-import { Loader } from "../components/Loader/index";
-import { Footer } from "../components/Footer";
 import Head from "next/head";
 import { getPlaiceholder } from "plaiceholder";
 import axios from "axios";
-import MediaQuery from 'react-responsive'
+import Modal from "../components/Modal";
 
 export default function Home({ filmMain, films, bestRated }) {
-  const { isDesktop } = useMedia();
   const [filmSelected, setFilmSelected] = useState(null);
 
   const handleClick = (e, film) => {
@@ -48,44 +43,15 @@ export default function Home({ filmMain, films, bestRated }) {
         />
       </Head>
       <NavBar />
-        <>
-          <MainFilm
-            film={filmMain}
-            onClick={(e) => handleClick(e, filmMain)}
-          />
-          <FilmsWrapper title="Best Rated">
-            {bestRated.map((film) => (
-              <Film
-                film={film}
-                key={film.id}
-                onClick={(e) => handleClick(e, film)}
-                hover={true}
-              />
-            ))}
-          </FilmsWrapper>
-          <FilmsWrapper title="All Films">
-            {films.map((film) => (
-              <Film
-                film={film}
-                key={film.id}
-                onClick={(e) => handleClick(e, film)}
-                hover={true}
-              />
-            ))}
-          </FilmsWrapper>
-          <Footer />
-          <MediaQuery maxWidth={768}>
-            <ModalMobile film={filmSelected} onClose={handleCloseModal} />
-          </MediaQuery>
-          <MediaQuery minWidth={768}>
-            <ModalDesktop film={filmSelected} onClose={handleCloseModal} />
-          </MediaQuery>
-        </>
-      <style jsx>{`
-        div.container {
-          min-height: 100%;
-        }
-      `}</style>
+      <MainFilm film={filmMain} onClick={(e) => handleClick(e, filmMain)} />
+      <FilmsWrapper title="Movies 🎬">
+        {films.map((film)=><Film film={film} key={film.id} hover onClick={e=>handleClick(e,film)}/>)}
+      </FilmsWrapper>
+      <FilmsWrapper title="Best Rated 🏆">
+        {bestRated.map((film)=><Film film={film} key={film.id} hover onClick={e=>handleClick(e,film)} />)}
+      </FilmsWrapper>
+      <Footer />
+      <Modal film={filmSelected} onClose={handleCloseModal} />
     </div>
   );
 }
@@ -94,11 +60,15 @@ export async function getStaticProps(context) {
   let dataParsed;
   try {
     const result = await axios(`${process.env.API_BASE}/api/films?lang=en`);
-    
+
     dataParsed = await Promise.all(
       result.data.map(async (film) => {
-        const image_base64 = await (await getPlaiceholder(film.image,{size:10})).base64
-        const poster_base64 = await (await getPlaiceholder(film.movie_banner,{size:10})).base64
+        const image_base64 = await (
+          await getPlaiceholder(film.image, { size: 10 })
+        ).base64;
+        const poster_base64 = await (
+          await getPlaiceholder(film.movie_banner, { size: 10 })
+        ).base64;
         return {
           title: film.title,
           description: film.description,
@@ -107,15 +77,15 @@ export async function getStaticProps(context) {
           release_date: film.release_date,
           rt_score: film.rt_score,
           image: {
-            src:film.image,
-            base64:image_base64
+            src: film.image,
+            base64: image_base64,
           },
-          poster:{
-            src:film.movie_banner,
-            base64:poster_base64
+          poster: {
+            src: film.movie_banner,
+            base64: poster_base64,
           },
           time: film.running_time,
-          id: film.id
+          id: film.id,
         };
       })
     );
@@ -123,10 +93,10 @@ export async function getStaticProps(context) {
     console.log(err);
   }
   return {
-    props:{
-      films:shuffleArray(dataParsed),
-      bestRated: dataParsed.filter((film)=>film.rt_score>90),
-      filmMain:dataParsed[random(0,dataParsed.length-1)]
-    }
-  }
+    props: {
+      films: shuffleArray(dataParsed),
+      bestRated: dataParsed.filter((film) => film.rt_score > 90),
+      filmMain: dataParsed[random(0, dataParsed.length - 1)],
+    },
+  };
 }

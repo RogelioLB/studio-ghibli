@@ -2,6 +2,8 @@ import {Film} from "../Film"
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+
 export function ModalDesktop({film,onClose}){
     return(
         <div className="modal" onClick={(e)=>e.stopPropagation()}>
