@@ -1,11 +1,13 @@
 import { useMedia } from "../../hooks/useMedia";
+import Image from "next/image"
 
 export function Film({film,onClick,hover}) {
   const {isDesktop} = useMedia()
+  
   return (
     <div className="film" onClick={onClick}>
         <div className="film-image">
-          <img src={film.image} alt={film.title}/>
+          <Image src={film.image.src} alt={film.title} layout="fill" placeholder="blur" blurDataURL={film.image.base64}/>
           {
             hover && (<><div></div>
           <h4>{film.title}</h4></>)
@@ -13,7 +15,6 @@ export function Film({film,onClick,hover}) {
         </div>
         <style jsx>{`
         .film{
-            height:${isDesktop ? "300px":"200px"};
             cursor:${hover ? "pointer" : "default"};
         }
 
@@ -32,7 +33,8 @@ export function Film({film,onClick,hover}) {
         }
 
         .film-image{
-          height:100%;
+          width:170px;
+          aspect-ratio:10/15;
           position:relative;
           transition: .3s;
           overflow: hidden;

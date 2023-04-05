@@ -1,23 +1,47 @@
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMedia } from "../../hooks/useMedia";
+import Image from "next/image"
+import MediaQuery from "react-responsive";
 
 export function MainFilm({film,onClick}) {
-    const {isDesktop} = useMedia();
     return (
         <div>
-            <div className="image-film" onClick={onClick}>
-                <img src={isDesktop ? film.poster : film.image} alt={film.title}/>
+        <MediaQuery minWidth={768}>
+            <div className="image-film" onClick={onClick} style={{aspectRatio:"16/8"}}>
+                <Image 
+                        placeholder="blur" 
+                        blurDataURL={film.poster.base64 }  
+                        src={film.poster.src} 
+                        alt={film.title} 
+                        layout="fill" 
+                    />
                 <div className="title-film">
                     <h1>{film.title}<span><FontAwesomeIcon icon={faInfoCircle}/></span></h1>
                 </div>
             </div>
+        </MediaQuery>
+        <MediaQuery maxWidth={768}>
+        <div className={`image-film`} onClick={onClick}>
+                <Image 
+                        placeholder="blur" 
+                        blurDataURL={film.image.base64 }  
+                        src={film.image.src} 
+                        alt={film.title} 
+                        layout="fill" 
+                    />
+                <div className="title-film">
+                    <h1>{film.title}<span><FontAwesomeIcon icon={faInfoCircle}/></span></h1>
+                </div>
+            </div>
+        </MediaQuery>
             <style jsx>{`
                 .image-film {
-                    width: 100%;
-                    height:${isDesktop ? '100vh' : 'auto'};
+                    width:100vw;
+                    aspect-ratio: 9/12;
                     position: relative;
                 }
+                
                 .image-film:before{
                     content: '';
                     position:absolute;
@@ -28,11 +52,6 @@ export function MainFilm({film,onClick}) {
                     background: rgba(0,0,0,0.5);
                     z-index:1;
                     box-shadow: inset 0 0px 36px black;
-                }
-                img{
-                    width:100%;
-                    object-fit:cover;
-                    height:${isDesktop ? '100vh' : 'auto'};
                 }
                 .title-film{
                     position: absolute;
