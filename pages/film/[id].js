@@ -16,12 +16,13 @@ export default function FilmPage({film,id}){
     const Trailer = () => {
         return(
             <>
-                <iframe src={`https://youtube.com/embed/${id}`} />
+                <iframe src={`https://youtube.com/embed/${id}`}/>
                 <style jsx>
                     {`
                         iframe{
                             width:100%;
                             height:100%;
+                            border:none;
                         }
                     `}
                 </style>
@@ -70,6 +71,20 @@ export default function FilmPage({film,id}){
                     
                 </div>
                 <style jsx>{`
+                    .film-page{
+                        backdrop-filter:blur(10px);
+                        position:relative;
+                    }
+                    .film-page:before{
+                        position:absolute;
+                        content:"";
+                        top:0;
+                        left:0;
+                        right:0;
+                        bottom:0;
+                        z-index:-1;
+                        background-color:rgb(0 0 0 /.6);
+                    }
                     .film-image{
                         width: 100%;
                         position:relative;
@@ -146,7 +161,7 @@ export async function getServerSideProps(context){
     const {id} = context.query;
     
     try{
-        const res = (await (await axios.get(`${process.env.API_BASE}/api/films/${id}?lang=es`)).data);
+        const res = (await (await axios.get(`${process.env.API_BASE}/api/films/${id}?lang=en`)).data);
         const {base64} = await getPlaiceholder(res.movie_banner)
         const film = {
                 title: res.title,

@@ -1,21 +1,16 @@
 import { Film } from "../components/Film";
+import { Footer } from "../components/Footer";
 import { FilmsWrapper } from "../components/FilmsWrapper";
 import { MainFilm } from "../components/MainFilm";
 import { NavBar } from "../components/NavBar";
-import { random, shuffleArray, useFilms } from "../hooks/useFilms";
-import { useMedia } from "../hooks/useMedia";
-import { ModalMobile } from "../components/ModalMobile/index";
-import { ModalDesktop } from "../components/ModalDesktop/index";
+import { random, shuffleArray } from "../hooks/useFilms";
 import { useState } from "react";
-import { Loader } from "../components/Loader/index";
-import { Footer } from "../components/Footer";
 import Head from "next/head";
 import { getPlaiceholder } from "plaiceholder";
 import axios from "axios";
-import MediaQuery from "react-responsive";
+import Modal from "../components/Modal";
 
 export default function Home({ filmMain, films, bestRated }) {
-  const { isDesktop } = useMedia();
   const [filmSelected, setFilmSelected] = useState(null);
 
   const handleClick = (e, film) => {
@@ -49,9 +44,14 @@ export default function Home({ filmMain, films, bestRated }) {
       </Head>
       <NavBar />
       <MainFilm film={filmMain} onClick={(e) => handleClick(e, filmMain)} />
-      {
-        isDesktop ? <ModalDesktop film={filmSelected} onClose={handleCloseModal} /> : <ModalMobile film={filmSelected} onClose={handleCloseModal}/>
-      }
+      <FilmsWrapper title="Movies 🎬">
+        {films.map((film)=><Film film={film} key={film.id} hover onClick={e=>handleClick(e,film)}/>)}
+      </FilmsWrapper>
+      <FilmsWrapper title="Best Rated 🏆">
+        {bestRated.map((film)=><Film film={film} key={film.id} hover onClick={e=>handleClick(e,film)} />)}
+      </FilmsWrapper>
+      <Footer />
+      <Modal film={filmSelected} onClose={handleCloseModal} />
     </div>
   );
 }
