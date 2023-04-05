@@ -96,7 +96,7 @@ export async function getStaticProps(context) {
     props: {
       films: shuffleArray(dataParsed),
       bestRated: dataParsed.filter((film) => film.rt_score > 90),
-      filmMain: dataParsed[random(0, dataParsed.length - 1)],
+      filmMain: dataParsed.find(film=>film.id==="58611129-2dbc-4a81-a72f-77ddfc1b1b49"),
     },
   };
 }
