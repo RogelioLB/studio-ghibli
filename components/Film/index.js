@@ -2,10 +2,11 @@ import { useMedia } from "../../hooks/useMedia";
 
 export function Film({film,onClick,hover}) {
   const {isDesktop} = useMedia()
+  
   return (
     <div className="film" onClick={onClick}>
         <div className="film-image">
-          <img src={film.image} alt={film.title}/>
+          <img src={film.image.src} alt={film.title}/>
           {
             hover && (<><div></div>
           <h4>{film.title}</h4></>)

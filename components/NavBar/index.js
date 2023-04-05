@@ -26,7 +26,7 @@ export function NavBar() {
     <nav ref={nav}>
         <Link href="/"><a><img src="/logo.svg" alt="Studio Ghibli" /></a></Link>
         {
-          lang.lang === "en" ? <img className="bandera" src="/usa.svg" onClick={handleClick} alt="USA" /> : <img className="bandera" onClick={handleClick} src="/mx.webp" alt="ES"/>
+          //lang.lang === "en" ? <img className="bandera" src="/usa.svg" onClick={handleClick} alt="USA" /> : <img className="bandera" onClick={handleClick} src="/mx.webp" alt="ES"/>
         }
         <style jsx>{`
         nav{

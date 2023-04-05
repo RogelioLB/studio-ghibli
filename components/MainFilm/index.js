@@ -4,19 +4,26 @@ import { useMedia } from "../../hooks/useMedia";
 import Image from "next/image"
 
 export function MainFilm({film,onClick}) {
-    const {isDesktop} = useMedia();
+    const {isDesktop,isMobile} = useMedia();
+    
     return (
         <div>
             <div className="image-film" onClick={onClick}>
-                <Image src={isDesktop ? film.poster : film.image} alt={film.title} layout="fill" style={{objectFit:"cover"}}/>
+                <Image 
+                        placeholder="blur" 
+                        blurDataURL={isDesktop?film.poster.base64 : film.image.base64 }  
+                        src={isDesktop?film.poster.src : film.image.src} 
+                        alt={film.title} 
+                        layout="fill" 
+                    />
                 <div className="title-film">
                     <h1>{film.title}<span><FontAwesomeIcon icon={faInfoCircle}/></span></h1>
-  -              </div>
+                </div>
             </div>
             <style jsx>{`
                 .image-film {
                     width:100vw;
-                    aspect-ratio:${isDesktop ? "16/9" : "9/12"};
+                    aspect-ratio:${isDesktop ? "16/8" : "9/12"};
                     position: relative;
                 }
                 .image-film:before{
@@ -29,11 +36,6 @@ export function MainFilm({film,onClick}) {
                     background: rgba(0,0,0,0.5);
                     z-index:1;
                     box-shadow: inset 0 0px 36px black;
-                }
-                img{
-                    width:100%;
-                    object-fit:cover;
-                    height:${isDesktop ? '100vh' : 'auto'};
                 }
                 .title-film{
                     position: absolute;
