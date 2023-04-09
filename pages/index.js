@@ -9,6 +9,7 @@ import Head from "next/head";
 import { getPlaiceholder } from "plaiceholder";
 import axios from "axios";
 import Modal from "../components/Modal";
+import PageContainer from "../components/PageContainer";
 
 export default function Home({ filmMain, films, bestRated }) {
   const [filmSelected, setFilmSelected] = useState(null);
@@ -23,7 +24,7 @@ export default function Home({ filmMain, films, bestRated }) {
   };
 
   return (
-    <div className="container">
+    <>
       <Head>
         <title>Studio Ghibli Films</title>
         <meta
@@ -43,6 +44,7 @@ export default function Home({ filmMain, films, bestRated }) {
         />
       </Head>
       <NavBar />
+      <PageContainer>
       <MainFilm film={filmMain} onClick={(e) => handleClick(e, filmMain)} />
       <FilmsWrapper title="Movies 🎬">
         {films.map((film)=><Film film={film} key={film.id} hover onClick={e=>handleClick(e,film)}/>)}
@@ -51,8 +53,9 @@ export default function Home({ filmMain, films, bestRated }) {
         {bestRated.map((film)=><Film film={film} key={film.id} hover onClick={e=>handleClick(e,film)} />)}
       </FilmsWrapper>
       <Footer />
-      <Modal film={filmSelected} onClose={handleCloseModal} />
-    </div>
+    </PageContainer>
+    <Modal film={filmSelected} onClose={handleCloseModal} />
+    </>
   );
 }
 

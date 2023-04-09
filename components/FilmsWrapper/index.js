@@ -2,7 +2,11 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef } from "react";
 import styled from "styled-components";
-import { useMedia } from "../../hooks/useMedia";
+
+const Container = styled.section`
+  position: relative;
+  z-index:1;
+`
 
 const Wrapper = styled.div`
   display:flex;
@@ -44,18 +48,7 @@ const ArrowButton = styled.button`
 
 const Title = styled.h2`
   padding:10px;
-  backdrop-filter:blur(10px);
   z-index:2;
-  &:after{
-    content:"";
-    position: absolute;
-    top:0;
-    right:0;
-    left:0;
-    bottom:0;
-    background-color:rgb(0 0 0 /.6);
-    z-index:-1;
-  }
 `
 
 export function FilmsWrapper({children,title}) {
