@@ -1,15 +1,14 @@
+import { useRouter } from "next/router";
 import { createContext, useState } from "react";
 
 export const langContext = createContext({lang:"en"});
 
 export default function LangContext({children}){
-    const [lang,setLang] = useState({lang:"en"})
+    const router = useRouter()
+    const {lang="en"} = router.query
 
-    const updateLang = (lang) =>{
-        setLang({lang:lang})
-    }
     return (
-        <langContext.Provider value={{lang,updateLang}}>
+        <langContext.Provider value={{lang}}>
             {children}
         </langContext.Provider>
     )

@@ -1,14 +1,20 @@
-import Image from "next/image"
 import { useRef,useEffect, useContext } from "react";
 import Link from "next/link";
-import { langContext } from "../../context/langContext";
+import { useRouter } from "next/router";
+import useLang from "../../hooks/useLang";
 export function NavBar() {
   const nav = useRef();
-  const {lang,updateLang} = useContext(langContext)
+  const lang = useLang()
+  const router = useRouter()
+  console.log(lang)
 
   const handleClick = () =>{
-    if(lang.lang==="en") updateLang("es")
-    else updateLang("en")
+    if(lang==="en"){
+      router.replace(`${router.asPath}`,{query:"lang=es"})
+    }
+    else {
+      router.replace(`${router.asPath}`,{query:"lang=en"})
+    }
   }
 
   useEffect(()=>{
@@ -26,7 +32,7 @@ export function NavBar() {
     <nav ref={nav}>
         <Link href="/"><a><img src="/logo.svg" alt="Studio Ghibli" /></a></Link>
         {
-          //lang.lang === "en" ? <img className="bandera" src="/usa.svg" onClick={handleClick} alt="USA" /> : <img className="bandera" onClick={handleClick} src="/mx.webp" alt="ES"/>
+          lang === "en" ? <img className="bandera" src="/usa.svg" onClick={handleClick} alt="USA" /> : <img className="bandera" onClick={handleClick} src="/mx.webp" alt="ES"/>
         }
         <style jsx>{`
         nav{

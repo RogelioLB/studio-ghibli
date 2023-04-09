@@ -3,7 +3,7 @@ import { Footer } from "../components/Footer";
 import { FilmsWrapper } from "../components/FilmsWrapper";
 import { MainFilm } from "../components/MainFilm";
 import { NavBar } from "../components/NavBar";
-import { random, shuffleArray } from "../hooks/useFilms";
+import { random, shuffleArray, useFilms } from "../hooks/useFilms";
 import { useState } from "react";
 import Head from "next/head";
 import { getPlaiceholder } from "plaiceholder";
@@ -56,10 +56,11 @@ export default function Home({ filmMain, films, bestRated }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   let dataParsed;
+  const {lang="en"} = context.query;
   try {
-    const result = await axios(`${process.env.API_BASE}/api/films?lang=en`);
+    const result = await axios(`${process.env.API_BASE}/api/films?lang=${lang}`);
 
     dataParsed = await Promise.all(
       result.data.map(async (film) => {
