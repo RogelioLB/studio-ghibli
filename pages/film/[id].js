@@ -5,32 +5,51 @@ import { Page404 } from "../../components/404";
 import { NavBar } from "../../components/NavBar";
 import Head from "next/head";
 import { Footer } from "../../components/Footer";
-import { useMedia } from "../../hooks/useMedia";
 import Image from "next/image"
 import {getPlaiceholder} from "plaiceholder"
+import Trailer from "../../components/Trailer";
+import PageContainer from "../../components/PageContainer";
+import styled from "styled-components";
+
+const FilmImage = styled.div`
+    width: 100%;
+    position:relative;
+    aspect-ratio:16/9;
+`
+
+const FilmInfo = styled.div`
+    padding:10px;
+`
+
+const FilmMetadata = styled.div`
+
+`
+
+const FilmData = styled.div`
+    overflow:hidden;
+`
+
+const FilmRating = styled.div` 
+    background-color:${props=>props.rating >= 80 ? "#16c116" : props.rating <= 79 && props.rating >= 60 ? "#c3c300" : "red"};
+    width:100px;
+    height:100px;
+    display:flex;
+    align-items:center;
+    font-size:28px;
+    justify-content:center;
+    float:left;
+    font-weight:700;
+    border-radius:10px;
+    margin-right:15px;
+`
+
+const FilmWrapper = styled.div`
+    margin:20px 0;
+    font-size: clamp(1rem, 0.9318rem + 0.3636vw, 1.25rem);
+`
 
 
 export default function FilmPage({film,id}){
-    const {isDesktop} = useMedia()
-
-    const Trailer = () => {
-        return(
-            <>
-                <iframe src={`https://youtube.com/embed/${id}`}/>
-                <style jsx>
-                    {`
-                        iframe{
-                            width:100%;
-                            height:100%;
-                            border:none;
-                        }
-                    `}
-                </style>
-            </>
-        )
-    }
-
-
     return(
         <>
         {film ? (
@@ -45,109 +64,28 @@ export default function FilmPage({film,id}){
                 <meta property="og:image" content={film.poster} />
             </Head>
             <NavBar />
-            <div className="film-page">
-                <div className="film-image">
+            <PageContainer>
+                <FilmImage>
                     <Image src={film.poster} alt={film.title} placeholder="blur" blurDataURL={film.base64} layout="fill" />
+                </FilmImage>
+                <FilmInfo>
+                    <FilmMetadata>
+                        <FilmData>
+                            <h1>{film.title}</h1>
+                            <FilmWrapper>
+                                <FilmRating rating={film.rt_score}>
+                                    {film.rt_score}
+                                </FilmRating>
+                                {film.description}
+                            </FilmWrapper>
+                        </FilmData>
+                    </FilmMetadata>
+                    <div className="video-container" style={{marginTop:10}}>
+                    <Trailer src={`https://www.youtube.com/embed/${id}`} />
                 </div>
-                <div className="film-info">
-                    <div className="film-data-container">
-                        <h1>{film.title}</h1>
-                        <p>{film.description}</p>
-                        <div className="film-meta">
-                            <h5>{film.release_date}</h5>
-                            <h5>{film.time} min.</h5>
-                            <h5>{film.rt_score}<span><FontAwesomeIcon icon={faStar}/></span></h5>
-                        </div>
-                        <div className="film-people">
-                            <h3>Producer: </h3>
-                            <h4>{film.producer}</h4>
-                            <h3>Director:</h3>
-                            <h4>{film.director}</h4>
-                        </div>
-                    </div>
-                    <div className="video-container">
-                        <Trailer />
-                    </div>
-                    
-                </div>
-                <style jsx>{`
-                    .film-page{
-                        backdrop-filter:blur(10px);
-                        position:relative;
-                    }
-                    .film-page:before{
-                        position:absolute;
-                        content:"";
-                        top:0;
-                        left:0;
-                        right:0;
-                        bottom:0;
-                        z-index:-1;
-                        background-color:rgb(0 0 0 /.6);
-                    }
-                    .film-image{
-                        width: 100%;
-                        position:relative;
-                        aspect-ratio:16/9;
-                    }
-                    .film-image img{
-                        max-width:100%;
-                        width: 100%;
-                    }
-                    .film-info{
-                        padding:10px;
-                        font-size:1em;
-                    }
-
-                    .film-info h1{
-                        margin-bottom:10px;
-                    }
-                    .film-data-container{
-                        flex:.78;
-                    }
-                    .film-meta{
-                        display:flex;
-                        gap:20px;
-                        margin:5px 0;
-                        font-size:.9em;
-                        color:#BDBDBD;
-                    }
-                    .film-meta h5 span{
-                        margin-left:5px;
-                        color:#ffc107;
-                    }
-                    .film-people h3{
-                        font-size:1.2em;
-                        font-weight:600;
-                    }
-                    .film-people h4{
-                        font-size:.9em;
-                        font-weight:400;
-                    }
-                    .video-container{
-                        max-width:90%;
-                        margin:30px auto;
-                        aspect-ratio:16/9;
-                        padding-bottom:15px;
-                    }
-
-                    nav{
-                        background-color: #1b4f72;
-                    }
-                    nav ul{
-                        display:flex;
-                        list-style:none;
-                    }
-                    nav ul li{
-                        cursor:pointer;
-                        transition: all .2s;
-                        padding:10px 15px;
-                        display:flex;
-                        align-items:center;
-                    }
-                `}</style>
+                </FilmInfo>
                 <Footer />
-            </div>
+            </PageContainer>
             </>
         )
         :   
