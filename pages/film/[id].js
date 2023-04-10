@@ -45,6 +45,7 @@ const FilmRating = styled.div`
 
 const FilmWrapper = styled.div`
     margin:20px 0;
+    font-size: clamp(1rem, 0.9318rem + 0.3636vw, 1.25rem);
 `
 
 

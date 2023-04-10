@@ -33,7 +33,7 @@ const ModalContainerData = styled.div`
 
 const ModalImage = styled.div`
     position:relative;
-    width:180px;
+    height:180px;
     aspect-ratio: 9/12;
 `
 
@@ -50,6 +50,12 @@ const DataFilm = styled.div`
 const TitleFilm = styled.h2`
     font-weight: 700;
     font-size: 25px;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-all;
 `
 
 const DescriptionFilm = styled.p`
@@ -57,7 +63,7 @@ const DescriptionFilm = styled.p`
     overflow:hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 11;
+    -webkit-line-clamp: 8;
 `
 
 const ButtonSeeMore = styled.button`
